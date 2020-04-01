@@ -80,6 +80,7 @@ const user = {
   image: 'https://theholybucket.s3-us-west-1.amazonaws.com/projectaudibly/guest-icon.png',
 };
 const myReply = {
+  _id: hash // unique ID for this reply
   songId: songIdGen(),
   name: user,
   text: input, // text sent through req body
