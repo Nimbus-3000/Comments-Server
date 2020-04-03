@@ -91,7 +91,7 @@ const myReply = {
 -Route to delete comment (DELETE)
 
 ```
-/api/songId/:id/comments/:commentId
+/api/songId/:songId/comments/:commentId
 
 HTTP Method: Delete
 Data is sent through URL parameters
