@@ -41,7 +41,7 @@ image: "https://s3.amazonaws.com/uifaces/faces/twitter/samuelkraft/128.jpg"
 -Route to add comment (UPDATE)
 
 ```
-/api/songId/:id/comments
+/api/songId/:songId/comments
 
 HTTP Method: POST
 Data is sent in request body
@@ -67,7 +67,7 @@ const comments = {
 -Route to add reply (PATCH)
 
 ```
-/api/songId/:id/replies
+/api/songId/:songId/comments/:commentId/replies
 
 HTTP Method: PATCH
 Data is sent through request body
@@ -91,7 +91,7 @@ const myReply = {
 -Route to delete comment (DELETE)
 
 ```
-/api/songId/:id/comments/:commentId
+/api/songId/:songId/comments/:commentId
 
 HTTP Method: Delete
 Data is sent through URL parameters
