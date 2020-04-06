@@ -8,12 +8,12 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const dataGeneratonSongs = () => {
-  const writeSongs = fs.createWriteStream('songs.csv');
-  writeSongs.write('likes,reposts,followers,tracks,song_name,user_id_songs,length\n', 'utf8');
+const dataGeneratonSongs1 = () => {
+  const writeSongs = fs.createWriteStream('./CsvFiles/songs.csv');
+  writeSongs.write('likes,reposts,tracks,song_name,user_id_songs,length\n', 'utf8');
 
   function writeTenMillionSongs(writer, encoding, callback) {
-    let i = 1000000;
+    let i = 5000000;
 
     function write() {
       let ok = true;
@@ -22,12 +22,23 @@ const dataGeneratonSongs = () => {
         const fakeLength = `${getRandomIntInclusive(0, 1)}` + ':' + `${getRandomIntInclusive(0, 59)}` + ':' + `${getRandomIntInclusive(0, 59)}`;
         const likes = getRandomIntInclusive(0, 20000);
         const reposts = getRandomIntInclusive(0, 20000);
-        const followers = getRandomIntInclusive(0, 20000);
         const tracks = getRandomIntInclusive(0, 20000);
         const song_name = faker.hacker.verb() + ' ' +  faker.hacker.adjective() + ' ' +  faker.hacker.noun();
         const user_id_songs = getRandomIntInclusive(1, 10000000);
         const length = fakeLength;
-        const data = `${likes},${reposts},${followers},${tracks},${song_name},${user_id_songs},${length}`;
+        const data = `${likes},${reposts},${tracks},${song_name},${user_id_songs},${length}\n`;
+        if (i === 4000000) {
+          console.log('wrote one million');
+        }
+        if (i === 300000) {
+          console.log('wrote two million');
+        }
+        if (i === 200000) {
+          console.log('wrote three million');
+        }
+        if (i === 0) {
+          console.log('wrote five million');
+        }
         if (i === 0) {
           writer.write(data, encoding, callback);
         } else {
@@ -37,17 +48,53 @@ const dataGeneratonSongs = () => {
       if (i > 0) {
         writer.once('drain', write);
       }
-      if (i === 100000) {
-        console.log('wrote one million');
-      }
-      if (i === 200000) {
-        console.log('wrote two million');
-      }
-      if (i === 500000) {
-        console.log('wrote five million');
-      }
-      if (i === 1000000) {
-        console.log('wrote ten million');
+    }
+    write();
+  }
+
+  writeTenMillionSongs(writeSongs, 'utf-8', () => {
+    writeSongs.end();
+  });
+};
+const dataGeneratonSongs2 = () => {
+  const writeSongs = fs.createWriteStream('./CsvFiles/songs2.csv');
+  writeSongs.write('likes,reposts,tracks,song_name,user_id_songs,length\n', 'utf8');
+
+  function writeTenMillionSongs(writer, encoding, callback) {
+    let i = 5000000;
+
+    function write() {
+      let ok = true;
+      do {
+        i -= 1;
+        const fakeLength = `${getRandomIntInclusive(0, 1)}` + ':' + `${getRandomIntInclusive(0, 59)}` + ':' + `${getRandomIntInclusive(0, 59)}`;
+        const likes = getRandomIntInclusive(0, 20000);
+        const reposts = getRandomIntInclusive(0, 20000);
+        const tracks = getRandomIntInclusive(0, 20000);
+        const song_name = faker.hacker.verb() + ' ' +  faker.hacker.adjective() + ' ' +  faker.hacker.noun();
+        const user_id_songs = getRandomIntInclusive(1, 10000000);
+        const length = fakeLength;
+        const data = `${likes},${reposts},${tracks},${song_name},${user_id_songs},${length}\n`;
+        if (i === 4000000) {
+          console.log('wrote one million');
+        }
+        if (i === 300000) {
+          console.log('wrote two million');
+        }
+        if (i === 200000) {
+          console.log('wrote three million');
+        }
+        if (i === 0) {
+          console.log('wrote five million');
+        }
+        if (i === 0) {
+          writer.write(data, encoding, callback);
+        } else {
+          ok = writer.write(data, encoding);
+        }
+      } while (i > 0 && ok);
+      if (i > 0) {
+        writer.once('drain', write);
       }
     }
     write();
@@ -57,8 +104,56 @@ const dataGeneratonSongs = () => {
     writeSongs.end();
   });
 };
-dataGeneratonSongs();
+// dataGeneratonSongs1();
+// dataGeneratonSongs2();
 
+const dataGeneratonUsersPart1 = () => {
+  const writeSongs = fs.createWriteStream('./CsvFiles/users1.csv');
+  writeSongs.write('user_name,location,image,tracks,num_of_songs,followers\n', 'utf8');
+
+  function writeFiveMillionUsers(writer, encoding, callback) {
+    let i = 5000000;
+
+    function write() {
+      let ok = true;
+      do {
+        i -= 1;
+        const user_name = getRandomIntInclusive(0, 20000);
+        const location = getRandomIntInclusive(0, 20000);
+        const image = getRandomIntInclusive(0, 20000);
+        const tracks = faker.hacker.verb() + ' ' +  faker.hacker.adjective() + ' ' +  faker.hacker.noun();
+        const num_of_songs = getRandomIntInclusive(1, 10000000);
+        const followers = fakeLength;
+        const data = `${likes},${reposts},${tracks},${song_name},${user_id_songs},${length}\n`;
+        if (i === 4000000) {
+          console.log('wrote one million');
+        }
+        if (i === 300000) {
+          console.log('wrote two million');
+        }
+        if (i === 200000) {
+          console.log('wrote three million');
+        }
+        if (i === 0) {
+          console.log('wrote five million');
+        }
+        if (i === 0) {
+          writer.write(data, encoding, callback);
+        } else {
+          ok = writer.write(data, encoding);
+        }
+      } while (i > 0 && ok);
+      if (i > 0) {
+        writer.once('drain', write);
+      }
+    }
+    write();
+  }
+
+  writeTenMillionSongs(writeSongs, 'utf-8', () => {
+    writeSongs.end();
+  });
+};
 
 /* CREATE TABLE "songs" (
   "song_id" SERIAL PRIMARY KEY,
@@ -69,8 +164,6 @@ dataGeneratonSongs();
   "user_id_songs" varchar(30), -- references user table with user_id
   "length" varchar(10)
 ); */
-
-
 /* const dataGeneraton = () => {
 
   for (let x = 1; x <= 5; x += 1) {
