@@ -1,3 +1,5 @@
+/* eslint-disable no-inner-declarations */
+/* eslint-disable no-console */
 const fs = require('fs');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const faker = require('faker');
@@ -8,7 +10,7 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const dataGeneratonSongs1 = () => {
+const dataGenerationSongs1 = () => {
   const writeSongs = fs.createWriteStream('./CsvFiles/songs.csv');
   writeSongs.write('likes,reposts,tracks,song_name,user_id_songs,length\n', 'utf8');
 
@@ -56,7 +58,8 @@ const dataGeneratonSongs1 = () => {
     writeSongs.end();
   });
 };
-const dataGeneratonSongs2 = () => {
+
+const dataGenerationSongs2 = () => {
   const writeSongs = fs.createWriteStream('./CsvFiles/songs2.csv');
   writeSongs.write('likes,reposts,tracks,song_name,user_id_songs,length\n', 'utf8');
 
@@ -104,12 +107,12 @@ const dataGeneratonSongs2 = () => {
     writeSongs.end();
   });
 };
-// dataGeneratonSongs1();
-// dataGeneratonSongs2();
+// dataGenerationSongs1();
+// dataGenerationSongs2();
 
-const dataGeneratonUsersPart1 = () => {
-  const writeSongs = fs.createWriteStream('./CsvFiles/users1.csv');
-  writeSongs.write('user_name,location,image,tracks,num_of_songs,followers\n', 'utf8');
+const dataGenerationUsersPart1 = () => {
+  const writeUsers = fs.createWriteStream('./CsvFiles/users1.csv');
+  writeUsers.write('user_name,location,image,num_of_songs,followers\n', 'utf8');
 
   function writeFiveMillionUsers(writer, encoding, callback) {
     let i = 5000000;
@@ -118,13 +121,12 @@ const dataGeneratonUsersPart1 = () => {
       let ok = true;
       do {
         i -= 1;
-        const user_name = getRandomIntInclusive(0, 20000);
-        const location = getRandomIntInclusive(0, 20000);
-        const image = getRandomIntInclusive(0, 20000);
-        const tracks = faker.hacker.verb() + ' ' +  faker.hacker.adjective() + ' ' +  faker.hacker.noun();
-        const num_of_songs = getRandomIntInclusive(1, 10000000);
-        const followers = fakeLength;
-        const data = `${likes},${reposts},${tracks},${song_name},${user_id_songs},${length}\n`;
+        const user_name = faker.internet.userName();
+        const location = faker.address.cityPrefix() + faker.address.citySuffix() ;
+        const image = faker.internet.avatar();
+        const num_of_songs = getRandomIntInclusive(0, 100);
+        const followers = getRandomIntInclusive(0, 30000);
+        const data = `${user_name},${location},${image},${num_of_songs},${followers}\n`;
         if (i === 4000000) {
           console.log('wrote one million');
         }
@@ -150,11 +152,108 @@ const dataGeneratonUsersPart1 = () => {
     write();
   }
 
-  writeTenMillionSongs(writeSongs, 'utf-8', () => {
-    writeSongs.end();
+  writeFiveMillionUsers(writeUsers, 'utf-8', () => {
+    writeUsers.end();
   });
 };
 
+const dataGenerationUsersPart2 = () => {
+  const writeUsers = fs.createWriteStream('./CsvFiles/users2.csv');
+  writeUsers.write('user_name,location,image,num_of_songs,followers\n', 'utf8');
+
+  function writeFiveMillionUsers(writer, encoding, callback) {
+    let i = 5000000;
+
+    function write() {
+      let ok = true;
+      do {
+        i -= 1;
+        const user_name = faker.internet.userName();
+        const location = faker.address.cityPrefix() + faker.address.citySuffix() ;
+        const image = faker.internet.avatar();
+        const num_of_songs = getRandomIntInclusive(0, 100);
+        const followers = getRandomIntInclusive(0, 30000);
+        const data = `${user_name},${location},${image},${num_of_songs},${followers}\n`;
+        if (i === 4000000) {
+          console.log('wrote one million');
+        }
+        if (i === 300000) {
+          console.log('wrote two million');
+        }
+        if (i === 200000) {
+          console.log('wrote three million');
+        }
+        if (i === 0) {
+          console.log('wrote five million');
+        }
+        if (i === 0) {
+          writer.write(data, encoding, callback);
+        } else {
+          ok = writer.write(data, encoding);
+        }
+      } while (i > 0 && ok);
+      if (i > 0) {
+        writer.once('drain', write);
+      }
+    }
+    write();
+  }
+
+  writeFiveMillionUsers(writeUsers, 'utf-8', () => {
+    writeUsers.end();
+  });
+};
+// dataGenerationUsersPart1();
+// dataGenerationUsersPart2();
+
+const dataGenerationCommentsPart1 = () => {
+  for (let x = 1; x <= 8; x += 1) {
+    const writeComments = fs.createWriteStream(`./CsvFiles/comments${x}.csv`);
+    writeComments.write('text,user,song_id_comments,reply_id,song_timestamp,date\n', 'utf8');
+    function writeFiveMillionComments(writer, encoding, callback) {
+      let i = 10000000;
+      function write() {
+        let ok = true;
+        do {
+          i -= 1;
+          const fakeLength = `${getRandomIntInclusive(0, 1)}` + ':' + `${getRandomIntInclusive(0, 59)}` + ':' + `${getRandomIntInclusive(0, 59)}`;
+          const text = faker.lorem.lines();
+          const user = getRandomIntInclusive(1, 10000000);
+          const song_id_comments = getRandomIntInclusive(1, 10000000);
+          const reply_id = null;
+          const song_timestamp = fakeLength
+          const date = faker.date.recent();
+          const data = `${text},${user},${song_id_comments},${reply_id},${song_timestamp},${date}\n`;
+          if (i === 4000000) {
+            console.log('wrote one million');
+          }
+          if (i === 300000) {
+            console.log('wrote two million');
+          }
+          if (i === 200000) {
+            console.log('wrote three million');
+          }
+          if (i === 0) {
+            console.log('wrote five million');
+          }
+          if (i === 0) {
+            writer.write(data, encoding, callback);
+          } else {
+            ok = writer.write(data, encoding);
+          }
+        } while (i > 0 && ok);
+        if (i > 0) {
+          writer.once('drain', write);
+        }
+      }
+      write();
+    }
+    writeFiveMillionComments(writeComments, 'utf-8', () => {
+      writeComments.end();
+    });
+  }
+};
+dataGenerationCommentsPart1();
 /* CREATE TABLE "songs" (
   "song_id" SERIAL PRIMARY KEY,
   "likes" integer,
