@@ -207,96 +207,50 @@ const dataGenerationUsersPart2 = () => {
 // dataGenerationUsersPart2();
 
 const dataGenerationCommentsPart1 = () => {
+  function writeFiveMillionComments(writer, encoding, callback) {
+    let i = 10000000;
+    function write() {
+      let ok = true;
+      do {
+        i -= 1;
+        const fakeLength = `${getRandomIntInclusive(0, 1)}` + ':' + `${getRandomIntInclusive(0, 59)}` + ':' + `${getRandomIntInclusive(0, 59)}`;
+        const text = faker.lorem.sentence() + ' ' + faker.lorem.sentence();
+        const user = getRandomIntInclusive(1, 10000000);
+        const song_id_comments = getRandomIntInclusive(1, 10000000);
+        const reply_id = null;
+        const song_timestamp = fakeLength;
+        const date = faker.date.past();
+        const data = `${text},${user},${song_id_comments},${reply_id},${song_timestamp},${date}\n`;
+        if (i === 4000000) {
+          console.log('wrote one million');
+        }
+        if (i === 300000) {
+          console.log('wrote two million');
+        }
+        if (i === 200000) {
+          console.log('wrote three million');
+        }
+        if (i === 0) {
+          console.log('wrote ten million');
+        }
+        if (i === 0) {
+          writer.write(data, encoding, callback);
+        } else {
+          ok = writer.write(data, encoding);
+        }
+      } while (i > 0 && ok);
+      if (i > 0) {
+        writer.once('drain', write);
+      }
+    }
+    write();
+  }
   for (let x = 1; x <= 8; x += 1) {
     const writeComments = fs.createWriteStream(`./CsvFiles/comments${x}.csv`);
     writeComments.write('text,user,song_id_comments,reply_id,song_timestamp,date\n', 'utf8');
-    function writeFiveMillionComments(writer, encoding, callback) {
-      let i = 10000000;
-      function write() {
-        let ok = true;
-        do {
-          i -= 1;
-          const fakeLength = `${getRandomIntInclusive(0, 1)}` + ':' + `${getRandomIntInclusive(0, 59)}` + ':' + `${getRandomIntInclusive(0, 59)}`;
-          const text = faker.lorem.lines();
-          const user = getRandomIntInclusive(1, 10000000);
-          const song_id_comments = getRandomIntInclusive(1, 10000000);
-          const reply_id = null;
-          const song_timestamp = fakeLength
-          const date = faker.date.recent();
-          const data = `${text},${user},${song_id_comments},${reply_id},${song_timestamp},${date}\n`;
-          if (i === 4000000) {
-            console.log('wrote one million');
-          }
-          if (i === 300000) {
-            console.log('wrote two million');
-          }
-          if (i === 200000) {
-            console.log('wrote three million');
-          }
-          if (i === 0) {
-            console.log('wrote five million');
-          }
-          if (i === 0) {
-            writer.write(data, encoding, callback);
-          } else {
-            ok = writer.write(data, encoding);
-          }
-        } while (i > 0 && ok);
-        if (i > 0) {
-          writer.once('drain', write);
-        }
-      }
-      write();
-    }
     writeFiveMillionComments(writeComments, 'utf-8', () => {
       writeComments.end();
     });
   }
 };
 dataGenerationCommentsPart1();
-/* CREATE TABLE "songs" (
-  "song_id" SERIAL PRIMARY KEY,
-  "likes" integer,
-  "reposts" integer,
-  "followers" integer,
-  "song_name" varchar(30),
-  "user_id_songs" varchar(30), -- references user table with user_id
-  "length" varchar(10)
-); */
-/* const dataGeneraton = () => {
-
-  for (let x = 1; x <= 5; x += 1) {
-    const dataSet = [];
-    const csvWriter = createCsvWriter({
-      path: `./CsvFiles/songs${x}.csv`,
-      header: [
-        { id: 'likes', title: 'likes' },
-        { id: 'reposts', title: 'reposts' },
-        { id: 'followers', title: 'followers' },
-        { id: 'tracks', title: 'tracks' },
-        { id: 'song_name', title: 'song_name' },
-        { id: 'user_id_songs', title: 'user_id_songs' },
-        { id: 'length', title: 'length' }
-      ],
-    });
-    for (let i = 0; i < 1000000; i += 1) {
-      const fakeLength = `${getRandomIntInclusive(0, 1)}` + ':' + `${getRandomIntInclusive(0, 59)}` + ':' + `${getRandomIntInclusive(0, 59)}`;
-      dataSet.push(
-        {
-          likes: getRandomIntInclusive(0, 20000),
-          reposts: getRandomIntInclusive(0, 20000),
-          followers: getRandomIntInclusive(0, 20000),
-          tracks: getRandomIntInclusive(0, 20000),
-          song_name: faker.hacker.adjective() + ' ' +  faker.hacker.adjective(),
-          user_id_songs: getRandomIntInclusive(1, 10000000),
-          length: fakeLength
-        },
-      );
-    }
-
-    csvWriter.writeRecords(dataSet)
-      .then(() => {
-        console.log('done');
-      });
-  }
-}; */
