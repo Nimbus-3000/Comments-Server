@@ -253,4 +253,54 @@ const dataGenerationCommentsPart1 = () => {
     });
   }
 };
-dataGenerationCommentsPart1();
+// dataGenerationCommentsPart1();
+
+const dataGenerationCommentsPart2 = () => {
+  function writeFiveMillionComments(writer, encoding, callback) {
+    let i = 10000000;
+    function write() {
+      let ok = true;
+      do {
+        i -= 1;
+        const fakeLength = `${getRandomIntInclusive(0, 1)}` + ':' + `${getRandomIntInclusive(0, 59)}` + ':' + `${getRandomIntInclusive(0, 59)}`;
+        const text = faker.lorem.sentence() + ' ' + faker.lorem.sentence();
+        const user = getRandomIntInclusive(1, 10000000);
+        const song_id_comments = getRandomIntInclusive(1, 10000000);
+        const reply_id = getRandomIntInclusive(1, 80000000);
+        const song_timestamp = fakeLength;
+        const date = faker.date.past();
+        const data = `${text},${user},${song_id_comments},${reply_id},${song_timestamp},${date}\n`;
+        if (i === 4000000) {
+          console.log('wrote one million');
+        }
+        if (i === 300000) {
+          console.log('wrote two million');
+        }
+        if (i === 200000) {
+          console.log('wrote three million');
+        }
+        if (i === 0) {
+          console.log('wrote ten million');
+        }
+        if (i === 0) {
+          writer.write(data, encoding, callback);
+        } else {
+          ok = writer.write(data, encoding);
+        }
+      } while (i > 0 && ok);
+      if (i > 0) {
+        writer.once('drain', write);
+      }
+    }
+    write();
+  }
+  for (let x = 1; x <= 2; x += 1) {
+    const writeComments = fs.createWriteStream(`./CsvFiles/commentReplies${x}.csv`);
+    writeComments.write('text,user,song_id_comments,reply_id,song_timestamp,date\n', 'utf8');
+    writeFiveMillionComments(writeComments, 'utf-8', () => {
+      writeComments.end();
+    });
+  }
+};
+
+dataGenerationCommentsPart2();
