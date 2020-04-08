@@ -1,0 +1,38 @@
+SONGS
+
+COPY public.songs(likes,reposts,tracks,song_name,user_id_songs,length) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/songs.csv' WITH(FORMAT csv, HEADER true);
+
+COPY public.songs(likes,reposts,tracks,song_name,user_id_songs,length) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/songs2.csv' WITH(FORMAT csv, HEADER true);
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+USERS
+
+COPY public.users(user_name,location,image,num_of_songs,followers) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/users1.csv' WITH(FORMAT csv, HEADER true);
+
+COPY public.users(user_name,location,image,num_of_songs,followers) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/users2.csv' WITH(FORMAT csv, HEADER true);
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+COMMENTS 
+
+COPY public.comments(text,"user",song_id_comments,reply_id,song_timestamp,date) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/comments1.csv' WITH(FORMAT csv, HEADER true);
+
+COPY public.comments(text,"user",song_id_comments,reply_id,song_timestamp,date) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/comments2.csv' WITH(FORMAT csv, HEADER true);
+
+COPY public.comments(text,"user",song_id_comments,reply_id,song_timestamp,date) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/comments3.csv' WITH(FORMAT csv, HEADER true);
+
+COPY public.comments(text,"user",song_id_comments,reply_id,song_timestamp,date) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/comments4.csv' WITH(FORMAT csv, HEADER true);
+
+COPY public.comments(text,"user",song_id_comments,reply_id,song_timestamp,date) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/comments5.csv' WITH(FORMAT csv, HEADER true);
+
+COPY public.comments(text,"user",song_id_comments,reply_id,song_timestamp,date) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/comments6.csv' WITH(FORMAT csv, HEADER true);
+
+COPY public.comments(text,"user",song_id_comments,reply_id,song_timestamp,date) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/comments7.csv' WITH(FORMAT csv, HEADER true);
+
+COPY public.comments(text,"user",song_id_comments,reply_id,song_timestamp,date) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/comments8.csv' WITH(FORMAT csv, HEADER true);
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+REPLIES
+
+COPY public.comments(text,"user",song_id_comments,reply_id,song_timestamp,date) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/commentReplies1.csv' WITH(FORMAT csv, HEADER true);
+
+COPY public.comments(text,"user",song_id_comments,reply_id,song_timestamp,date) FROM '/Users/Calvin/CapStone/SDC/Comments-Server/CsvFiles/commentReplies2.csv' WITH(FORMAT csv, HEADER true);
+
+

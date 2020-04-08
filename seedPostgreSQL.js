@@ -213,13 +213,16 @@ const dataGenerationCommentsPart1 = () => {
       let ok = true;
       do {
         i -= 1;
+        const year = `${getRandomIntInclusive(2008, 2019)}`;
+        const month = `${getRandomIntInclusive(1, 12)}`;
+        const day = `${getRandomIntInclusive(1, 30)}`;
+        const date = year + '-'  + month + '-' + day;
         const fakeLength = `${getRandomIntInclusive(0, 1)}` + ':' + `${getRandomIntInclusive(0, 59)}` + ':' + `${getRandomIntInclusive(0, 59)}`;
         const text = faker.lorem.sentence() + ' ' + faker.lorem.sentence();
         const user = getRandomIntInclusive(1, 10000000);
         const song_id_comments = getRandomIntInclusive(1, 10000000);
-        const reply_id = null;
+        const reply_id = 0;
         const song_timestamp = fakeLength;
-        const date = faker.date.past();
         const data = `${text},${user},${song_id_comments},${reply_id},${song_timestamp},${date}\n`;
         if (i === 4000000) {
           console.log('wrote one million');
@@ -253,7 +256,7 @@ const dataGenerationCommentsPart1 = () => {
     });
   }
 };
-// dataGenerationCommentsPart1();
+dataGenerationCommentsPart1();
 
 const dataGenerationCommentsPart2 = () => {
   function writeFiveMillionComments(writer, encoding, callback) {
@@ -262,13 +265,16 @@ const dataGenerationCommentsPart2 = () => {
       let ok = true;
       do {
         i -= 1;
+        const year = `${getRandomIntInclusive(2008, 2019)}`;
+        const month = `${getRandomIntInclusive(1, 12)}`;
+        const day = `${getRandomIntInclusive(1, 30)}`;
+        const date = year + '-'  + month + '-' + day;
         const fakeLength = `${getRandomIntInclusive(0, 1)}` + ':' + `${getRandomIntInclusive(0, 59)}` + ':' + `${getRandomIntInclusive(0, 59)}`;
         const text = faker.lorem.sentence() + ' ' + faker.lorem.sentence();
         const user = getRandomIntInclusive(1, 10000000);
         const song_id_comments = getRandomIntInclusive(1, 10000000);
         const reply_id = getRandomIntInclusive(1, 80000000);
         const song_timestamp = fakeLength;
-        const date = faker.date.past();
         const data = `${text},${user},${song_id_comments},${reply_id},${song_timestamp},${date}\n`;
         if (i === 4000000) {
           console.log('wrote one million');
