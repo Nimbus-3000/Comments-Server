@@ -221,7 +221,7 @@ const dataGenerationCommentsPart1 = () => {
         const text = faker.lorem.sentence() + ' ' + faker.lorem.sentence();
         const user = getRandomIntInclusive(1, 10000000);
         const song_id_comments = getRandomIntInclusive(1, 10000000);
-        const reply_id = 0;
+        const reply_id = 1;
         const song_timestamp = fakeLength;
         const data = `${text},${user},${song_id_comments},${reply_id},${song_timestamp},${date}\n`;
         if (i === 4000000) {
@@ -309,4 +309,4 @@ const dataGenerationCommentsPart2 = () => {
   }
 };
 
-dataGenerationCommentsPart2();
+// dataGenerationCommentsPart2();
