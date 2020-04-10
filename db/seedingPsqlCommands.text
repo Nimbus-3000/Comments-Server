@@ -444,6 +444,52 @@ select * from public.songs INNER JOIN public.users ON public.songs.user_id_songs
 
 Time: 4.691 ms
 
+===============
+insert into users
+================
+
+
+soundcloud=# INSERT INTO users VALUES (DEFAULT, 'bob', 'oakland', 'no image', 20, 100);
+INSERT 0 1
+Time: 5.833 ms
+
+soundcloud=# INSERT INTO users VALUES (DEFAULT, 'john', 'san francisco', 'no imagesdfasdfsdfsdf', 200, 100);
+INSERT 0 1
+Time: 2.589 ms
+
+INSERT INTO users VALUES (DEFAULT, 'apex952', 'Florida', 'www.fakedata.com/imagehere/morequeries', 20043, 1400);
+INSERT 0 1
+Time: 7.235 ms
+
+
+===================
+insert int comments
+===================
+
+soundcloud=# INSERT INTO comments VALUES (DEFAULT, 'blah blah blah yea yea yea!', 202, 20, 1, '0:0:0');
+INSERT 0 1
+Time: 6.975 ms
+
+soundcloud=# INSERT INTO comments VALUES (DEFAULT, 'blah blah blah yea yea ydfadsfsdfgsdfgdfsgea!', 2022, 242320, 1, '0:0:0');
+INSERT 0 1
+Time: 14.151 ms
+
+soundcloud=# INSERT INTO comments VALUES (DEFAULT, 'blah blasdijsdfgdfsg yea yea ydfadsfsdfgsdfgdfsgea!', 2022, 994930, 1, '0:0:0');
+INSERT 0 1
+Time: 15.206 ms
+
+soundcloud=# INSERT INTO comments VALUES (DEFAULT, 'blah blasdijsddsajdgsdfjglsdfjgldfjgldfjglzdfgldfjglidfjgdfxg!', 2022, 1110,111041, '0:20:10');
+INSERT 0 1
+Time: 13.133 ms
+
+soundcloud=# INSERT INTO comments VALUES (DEFAULT, 'blah blasdijsddsajdgsdfjglsdfjgldfjgldfjglzdfgldfjgliddddddddddddddddddddddddddddddfjgdfxg!', 2022, 11130,3111041, '0:20:10');
+INSERT 0 1
+Time: 22.716 ms
+
+
+
+
+===============================================================================================================================================================================================================================================================
 ======================================
 CASSANDRA
 ======================================
@@ -480,3 +526,19 @@ select * from commentsBySong where song_int = 2 and user_song_name = 'Rosina.Kee
   4999994 | Raphael.Sawayn | e4a2c432-518e-4d1f-985f-6c47e903a1d0 |     2017-2-3 | illum voluptatem quisquam |            1:49:3 |                  8569 |   https://s3.amazonaws.com/uifaces/faces/twitter/lonesomelemon/128.jpg |               chester |             Elias74 | 8808ed83-e429-4d2d-aba1-d22b00fe37f6 |     0:25:36 | voluptatem molestias soluta |              5879 |               75
 
 (10 rows)
+
+===========
+inserts
+============
+
+insert into commentsBySong (song_id, song_int, song_name, song_length, user_song_name, user_song_tracks, user_song_reposts, comment_text, comment_username, comment_user_location, comment_user_image, comment_user_follower, comment_timestamp, comment_id, comment_date) VALUES
+(uuid(), 200, 'test', '0:0:10', 'test artist', 200, 300, 'this is a test comment', 'test commentee', 'oakland', 'www.test.com/fakeimage', 2000, '0:20:20', uuid(), '2015');
+
+insert into commentsBySong (song_id, song_int, song_name, song_length, user_song_name, user_song_tracks, user_song_reposts, comment_text, comment_username, comment_user_location, comment_user_image, comment_user_follower, comment_timestamp, comment_id, comment_date) VALUES
+(uuid(), 2030, 'tesfsdaft', '0:0:10', 'test asdfgsdfgsdfgdvcxrtist', 200, 300, 'this is a dfgxdfgtest comment', 'test commexvcbcvntee', 'fdgdxfg', 'www.test.com/fakeifgdfgmage', 2000, '0:20:20', uuid(), '2015');
+
+insert into commentsBySong (song_id, song_int, song_name, song_length, user_song_name, user_song_tracks, user_song_reposts, comment_text, comment_username, comment_user_location, comment_user_image, comment_user_follower, comment_timestamp, comment_id, comment_date) VALUES
+(uuid(), 200, 'test', '0:0:10', 'test arfdgdfvvvccvtist', 200, 300, 'this is a tevccvbcvbst comment', 'test vbcvbcvb', 'cvbcvbcvb', 'www.test.com/fakcvbcvbceimage', 20003, '0:20:20', uuid(), '2015');
+
+insert into commentsBySong (song_id, song_int, song_name, song_length, user_song_name, user_song_tracks, user_song_reposts, comment_text, comment_username, comment_user_location, comment_user_image, comment_user_follower, comment_timestamp, comment_id, comment_date) VALUES
+(uuid(), 200, 'test', '0:0:10', 'test adfsvvvbcvbrtist', 200, 300, 'this ifdfsdfgs adf testd comment', 'test comdsffdxccvcvbmentee', 'oakladfgdfgnd', 'www.test.dfgdfgdcom/fakdfgdfgdsfgeimage', 2000, '0:20:20', uuid(), '2015');
