@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const db = require('../db/index.js');
+const db = require('../db/indexPostgres.js');
+
 
 const app = express();
 const port = 4001;
@@ -11,14 +13,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/api/comments', (req, res) => {
-  // console.log('get request succeeded');
-  db.getAllComments((err, data) => {
-    if (err) {
-      res.status(400).send('unable to retrieve data from database');
-    } else {
-      res.send(data);
-    }
-  });
+  console.log('pinged')
+  db.getComments();
 });
 
 app.get('/api/reply', (req, res) => {
