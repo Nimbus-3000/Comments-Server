@@ -11,12 +11,12 @@ const port = 4001;
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, '../public')));
-
-app.get('/api/comments', (req, res) => {
-  console.log('pinged')
-  db.getComments((comments) => {
-    console.log(comments)
-    res.send(comments)
+//http://localhost:4001/api/songId/20/comments
+app.get('/api/songId/:id/comments', (req, res) => {
+  const id = req.params.id
+  db.getComments(id, (comments) => {
+    // console.log(comments);
+    res.send(comments);
   });
 });
 

@@ -8,9 +8,12 @@ const client = new Client({
 });
 client.connect();
 
-const getComments = (callback) => {
+const getComments = (id, callback) => {
   console.log('db getComments pinged')
-  const queryStr = 'select * from public.songs INNER JOIN public.users ON public.songs.user_id_songs = public.users.user_id where public.songs.song_id = 8000000;'
+  const queryStr = `select * from public.comments 
+  INNER JOIN public.users ON public.comments."user" = public.users.user_id 
+  INNER JOIN public.songs ON public.comments.song_id_comments = public.songs.song_id 
+  where public.comments.song_id_comments = ${id};`;
 
   client.query(queryStr, (err, res) => {
     if (err) {
