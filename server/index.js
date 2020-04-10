@@ -40,6 +40,19 @@ app.post('/api/songId/:id/comments', (req, res) => {
   });
 });
 
+app.patch('/api/songId/:songId/comments/:commentId/replies', (req, res) => {
+  const {songId} = req.params;
+  const {commentId} = req.params;
+  const body = req.body;
+  db.replyComment(body, (err, posted) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(201).send(posted);
+    }
+  });
+});
+
 app.listen(port, (err) => {
   if (err) {
     console.log(err, `unable to connect to port ${port}`);
