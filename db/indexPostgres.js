@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-console */
 const { Pool, Client } = require('pg');
 
 const client = new Client({
@@ -18,16 +20,43 @@ const getComments = (id, callback) => {
   client.query(queryStr, (err, res) => {
     if (err) {
       console.log(err.stack);
+      callback(err.stack, null);
     } else {
-      // console.log(res.rows);
-      callback(res.rows)
+      callback(null, res.rows);
     }
   });
-
-  // client
-  //   .query(queryStr)
-  //   .then(res => console.log(res.rows[0]))
-  //   .catch(e => console.error(e.stack))
 };
 
-module.exports = { getComments };
+const addComment = (id, body, callback) => {
+  console.log('db addComment pinged');
+  const {
+    text,
+    user,
+    song_id_comments,
+    reply_id,
+    song_timestamp,
+    date,
+  } = body;
+
+  const queryStr = `
+  INSERT INTO comments VALUES
+        (DEFAULT,
+        '${text}',
+        ${user},
+        ${song_id_comments},
+        ${reply_id},
+        '${song_timestamp}',
+        '${date}');`;
+
+  client.query(queryStr, (err, res) => {
+    if (err) {
+      console.log(err.stack);
+      callback(err.stack, null);
+    } else {
+      console.log('posted comment to DB');
+      callback(null, res);
+    }
+  });
+};
+
+module.exports = { getComments, addComment };

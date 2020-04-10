@@ -11,52 +11,31 @@ const port = 4001;
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, '../public')));
-//http://localhost:4001/api/songId/20/comments
+/*
+http://localhost:4001/api/songId/20/comments
+*/
 app.get('/api/songId/:id/comments', (req, res) => {
   const id = req.params.id
-  db.getComments(id, (comments) => {
+  db.getComments(id, (err, comments) => {
     // console.log(comments);
-    res.send(comments);
-  });
-});
-
-app.get('/api/reply', (req, res) => {
-  // console.log('get request succeeded');
-  db.getAllComments((err, data) => {
     if (err) {
-      res.status(400).send('unable to retrieve data from database');
+      res.status(404).send(err);
     } else {
-      res.send(data);
+      res.status(200).send(comments);
     }
   });
 });
 
-app.get('/api/tracker', (req, res) => {
-  db.getAllTrackers((err, data) => {
-    if (err) {
-      res.status(400).send('unable to retrieve tracker data from database');
-    } else {
-      res.send(data);
-    }
-  });
-});
+// add comment
+app.post('/api/songId/:id/comments', (req, res) => {
+  const id = req.params.id;
+  const body = req.body;
 
-app.post('/api/comments', (req, res) => {
-  db.logCommentInDB(req.body.input, (err, data) => {
+  db.addComment(id, body, (err, posted) => {
     if (err) {
-      res.status(400).send('unable to log comment into database')
+      res.status(400).send(err);
     } else {
-      res.send(data);
-    }
-  });
-});
-
-app.post('/api/reply', (req, res) => {
-  db.logReplyInDB(req.body.reply, req.body.id, (err, data) => {
-    if (err) {
-      res.status(400).send('unable to log reply in database')
-    } else {
-      res.send(data);
+      res.status(201).send(posted);
     }
   });
 });
