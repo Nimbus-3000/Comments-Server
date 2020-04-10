@@ -8,7 +8,7 @@ const client = new Client({
 });
 client.connect();
 
-const getComments = (args, callback) => {
+const getComments = (callback) => {
   console.log('db getComments pinged')
   const queryStr = 'select * from public.songs INNER JOIN public.users ON public.songs.user_id_songs = public.users.user_id where public.songs.song_id = 8000000;'
 
@@ -16,7 +16,8 @@ const getComments = (args, callback) => {
     if (err) {
       console.log(err.stack);
     } else {
-      console.log(res.rows[0]);
+      // console.log(res.rows);
+      callback(res.rows)
     }
   });
 

@@ -14,7 +14,10 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/api/comments', (req, res) => {
   console.log('pinged')
-  db.getComments();
+  db.getComments((comments) => {
+    console.log(comments)
+    res.send(comments)
+  });
 });
 
 app.get('/api/reply', (req, res) => {
