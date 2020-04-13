@@ -1,7 +1,11 @@
+/* eslint-disable no-console */
+require('newrelic');
+
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const db = require('../db/index.js');
+const db = require('../db/indexPostgres.js');
+
 
 const app = express();
 const port = 4001;
@@ -9,55 +13,44 @@ const port = 4001;
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, '../public')));
-
-app.get('/api/comments', (req, res) => {
-  // console.log('get request succeeded');
-  db.getAllComments((err, data) => {
+/*
+http://localhost:4001/api/songId/20/comments
+*/
+app.get('/api/songId/:id/comments', (req, res) => {
+  const id = req.params.id
+  db.getComments(id, (err, comments) => {
+    // console.log(comments);
     if (err) {
-      res.status(400).send('unable to retrieve data from database');
+      res.status(404).send(err);
     } else {
-      res.send(data);
+      res.status(200).send(comments);
     }
   });
 });
 
-app.get('/api/reply', (req, res) => {
-  // console.log('get request succeeded');
-  db.getAllComments((err, data) => {
+// add comment
+app.post('/api/songId/:id/comments', (req, res) => {
+  const id = req.params.id;
+  const body = req.body;
+
+  db.addComment(id, body, (err, posted) => {
     if (err) {
-      res.status(400).send('unable to retrieve data from database');
+      res.status(400).send(err);
     } else {
-      res.send(data);
+      res.status(201).send(posted);
     }
   });
 });
 
-app.get('/api/tracker', (req, res) => {
-  db.getAllTrackers((err, data) => {
+app.patch('/api/songId/:songId/comments/:commentId/replies', (req, res) => {
+  const {songId} = req.params;
+  const {commentId} = req.params;
+  const body = req.body;
+  db.replyComment(body, (err, posted) => {
     if (err) {
-      res.status(400).send('unable to retrieve tracker data from database');
+      res.status(400).send(err);
     } else {
-      res.send(data);
-    }
-  });
-});
-
-app.post('/api/comments', (req, res) => {
-  db.logCommentInDB(req.body.input, (err, data) => {
-    if (err) {
-      res.status(400).send('unable to log comment into database')
-    } else {
-      res.send(data);
-    }
-  });
-});
-
-app.post('/api/reply', (req, res) => {
-  db.logReplyInDB(req.body.reply, req.body.id, (err, data) => {
-    if (err) {
-      res.status(400).send('unable to log reply in database')
-    } else {
-      res.send(data);
+      res.status(201).send(posted);
     }
   });
 });

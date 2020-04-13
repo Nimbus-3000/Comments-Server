@@ -26,7 +26,7 @@ class App extends React.Component {
   getComments() {
     axios.get('/api/comments')
       .then((response) => {
-        // console.log(response.data);
+        console.log(response.data);
         this.setState({ comments: response.data });
         console.log('Success! Retrieved data from server');
       })
