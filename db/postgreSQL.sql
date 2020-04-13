@@ -33,13 +33,17 @@ DROP TABLE IF EXISTS comments;
 CREATE TABLE comments (
   comment_id SERIAL PRIMARY KEY, 
   text varchar(300),
-  "user" varchar(30), -- references user_id in users: random num between 1 and 10,000,000
+  "user" int, -- references user_id in users: random num between 1 and 10,000,000
   song_id_comments integer, -- references song_id in songs: random number between 1 and 10,000,000
   reply_id integer, -- references comment_id of comments if a reply, otherwise NULL to represent parent comment
   song_timestamp varchar(10),
   date varchar(30)
 );
 
--- ALTER TABLE songs ADD FOREIGN KEY (song_id) REFERENCES comments (song);
--- ALTER TABLE users ADD FOREIGN KEY (user_id) REFERENCES comments (user);
--- ALTER TABLE comments ADD FOREIGN KEY (comment_id) REFERENCES comments (reply_id);
+-- ALTER TABLE public.songs ADD CONSTRAINT songUsers FOREIGN KEY (user_id_songs) REFERENCES public.users (user_id);
+
+-- ALTER TABLE public.comments ADD CONSTRAINT commentsSongId FOREIGN KEY (song_id_comments) REFERENCES public.songs (song_id);
+
+-- ALTER TABLE public.comments ADD CONSTRAINT commentsUserId FOREIGN KEY ("user") REFERENCES public.users (user_id);
+
+-- ALTER TABLE public.comments ADD CONSTRAINT commentsReply FOREIGN KEY (reply_id) REFERENCES public.comments (comment_id);

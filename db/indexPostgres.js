@@ -89,3 +89,8 @@ const replyComment = (body, callback) => {
 };
 
 module.exports = { getComments, addComment, replyComment };
+/* 
+select * from public.comments 
+  INNER JOIN public.songs ON public.comments.song_id_comments = public.songs.song_id 
+  where public.comments.song_id_comments = ${id};
+*/
